@@ -6,14 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SoundProcessor {
-    private final double amplitudeThreshold;
-    private final int sampleSize;
+    @Value("${sound.amplitude-threshold}")
+    private double amplitudeThreshold;
+    @Value("${sound.sample-size}")
+    private int sampleSize;
 
-    public SoundProcessor(@Value("${sound.amplitude-threshold}") double amplitudeThreshold,
-                          @Value("${sound.sample-size}") int sampleSize) {
-        this.amplitudeThreshold = amplitudeThreshold;
-        this.sampleSize = sampleSize;
-    }
 
     public boolean isSound(byte[] buffer) {
 

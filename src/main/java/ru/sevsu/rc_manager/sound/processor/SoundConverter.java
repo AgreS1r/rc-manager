@@ -1,6 +1,6 @@
 package ru.sevsu.rc_manager.sound.processor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFormat;
@@ -8,12 +8,9 @@ import javax.sound.sampled.AudioInputStream;
 import java.io.ByteArrayInputStream;
 
 @Component
+@RequiredArgsConstructor
 public class SoundConverter {
-    private SoundFormat soundFormat;
-
-    public SoundConverter(SoundFormat soundFormat){
-        this.soundFormat = soundFormat;
-    }
+    private final SoundFormat soundFormat;
 
     public AudioInputStream byteToStream(byte[] sound) {
         AudioFormat format = soundFormat.getAudioFormat();

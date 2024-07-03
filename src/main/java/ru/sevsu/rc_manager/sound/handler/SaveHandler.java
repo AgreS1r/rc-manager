@@ -1,7 +1,6 @@
 package ru.sevsu.rc_manager.sound.handler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -13,8 +12,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
+@Slf4j
 public class SaveHandler implements Handler {
-    private static final Logger log = LoggerFactory.getLogger(SaveHandler.class);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH-mm-ss");
 
     @Override

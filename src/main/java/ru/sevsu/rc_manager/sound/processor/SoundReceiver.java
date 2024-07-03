@@ -1,9 +1,9 @@
 package ru.sevsu.rc_manager.sound.processor;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.sevsu.rc_manager.sound.handler.SoundHandler;
@@ -12,21 +12,15 @@ import javax.sound.sampled.*;
 import java.io.ByteArrayOutputStream;
 
 @Service
+@RequiredArgsConstructor
 public class SoundReceiver {
     private final SoundProcessor soundProcessor;
     private final SoundHandler soundHandler;
     private final SoundFormat soundFormat;
     private static final Logger log = LoggerFactory.getLogger(SoundReceiver.class);
-    private final int minDuration;
 
-    @Autowired
-    public SoundReceiver(SoundProcessor soundProcessor, SoundHandler soundHandler, SoundFormat soundFormat,
-                         @Value("${sound.min-duration}") int minDuration) {
-        this.soundProcessor = soundProcessor;
-        this.soundHandler = soundHandler;
-        this.soundFormat = soundFormat;
-        this.minDuration = minDuration;
-    }
+    @Value("${sound.min-duration}")
+    private int minDuration;
 
     @PostConstruct
     public void processAudio() {
