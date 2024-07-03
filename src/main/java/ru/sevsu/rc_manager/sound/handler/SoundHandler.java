@@ -11,13 +11,13 @@ import javax.sound.sampled.AudioInputStream;
 @RequiredArgsConstructor
 @Slf4j
 public class SoundHandler {
-    private final SaveHandler saveHandler;
+    private final SaveSoundHandler saveSoundHandler;
     private final SoundConverter soundConverter;
 
-
+// This handler convert byte array to AudioStream and send it to other handlers
     public void handle(byte[] sound) {
         log.info("Audio handled");
         AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
-        saveHandler.handle(audioInputStream);
+        saveSoundHandler.handle(audioInputStream);
     }
 }

@@ -23,7 +23,7 @@ public class SoundReceiver {
     private int minDuration;
 
     @PostConstruct
-    public void processAudio() {
+    public void receiveSound() {
         try {
             AudioFormat format = soundFormat.getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);

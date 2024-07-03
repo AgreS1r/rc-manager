@@ -11,9 +11,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+// Handler saves sound on device named by received date and time
 @Component
 @Slf4j
-public class SaveHandler implements Handler {
+public class SaveSoundHandler implements Handler {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH-mm-ss");
 
     @Override
