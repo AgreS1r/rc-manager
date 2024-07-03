@@ -13,11 +13,14 @@ import javax.sound.sampled.AudioInputStream;
 public class SoundHandler {
     private final SaveHandler saveHandler;
     private final SoundConverter soundConverter;
+    private final RecognizeHandler recognizeHandler;
 
 
     public void handle(byte[] sound) {
         log.info("Audio handled");
         AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
         saveHandler.handle(audioInputStream);
+        recognizeHandler.handle(audioInputStream);
+
     }
 }

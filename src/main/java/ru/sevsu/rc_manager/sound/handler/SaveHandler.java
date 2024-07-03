@@ -1,6 +1,7 @@
 package ru.sevsu.rc_manager.sound.handler;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 @Component
 @Slf4j
 public class SaveHandler implements Handler {
@@ -18,11 +20,16 @@ public class SaveHandler implements Handler {
 
     @Override
     public void handle(AudioInputStream audioInputStream) {
+        String audioFilePath = "temp.wav";
         try {
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE,
-                    new File(LocalDateTime.now().format(formatter) + "_signal.wav"));
+                    new File(audioFilePath));
         } catch (IOException e) {
             log.warn(e.getMessage());
         }
+
+
     }
 }
+
+

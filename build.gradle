@@ -23,6 +23,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	implementation group: 'com.alphacephei', name: 'vosk', version: '0.3.45'
+	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.14.0'
 }
 
 tasks.named('test') {
