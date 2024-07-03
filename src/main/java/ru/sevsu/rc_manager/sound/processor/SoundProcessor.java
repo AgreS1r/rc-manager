@@ -1,10 +1,12 @@
 package ru.sevsu.rc_manager.sound.processor;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
 @Component
+@Setter
 public class SoundProcessor {
     @Value("${sound.amplitude-threshold}")
     private double amplitudeThreshold;
@@ -18,7 +20,7 @@ public class SoundProcessor {
 
             short sample = (short) ((buffer[i + 1] << 8) | (buffer[i] & 0xFF));
 
-            if (Math.abs(sample) > amplitudeThreshold) {
+            if (Math.abs(sample) >= amplitudeThreshold) {
                 return true;
             }
         }
