@@ -2,8 +2,7 @@ package ru.sevsu.rc_manager.sound.processor;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.sevsu.rc_manager.sound.handler.SoundHandler;
@@ -13,14 +12,16 @@ import java.io.ByteArrayOutputStream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SoundReceiver {
     private final SoundProcessor soundProcessor;
     private final SoundHandler soundHandler;
     private final SoundFormat soundFormat;
-    private static final Logger log = LoggerFactory.getLogger(SoundReceiver.class);
 
     @Value("${sound.min-duration}")
     private int minDuration;
+    @Value("${sound.calibration-time}")
+    private int calibrationTime;
 
     @PostConstruct
     public void receiveSound() {
@@ -33,9 +34,24 @@ public class SoundReceiver {
 
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            long startTime = 0;
-            boolean recording = false;
+            long startTime;
+            long calibrateDuration = 0;
+            int sum = 0;
+            int count = 0;
+            startTime = System.currentTimeMillis();
+            while (calibrateDuration < calibrationTime) {
+                byte[] data = new byte[16000];
+                line.read(data, 0, data.length);
+                sum = sum + soundProcessor.calibrate(data);
+                count++;
+                System.out.println(sum + " " + count);
+                calibrateDuration = System.currentTimeMillis() - startTime;
+            }
+            soundProcessor.setAvgNoiseAmplitude(sum/count);
+            System.out.println(sum/count);
 
+            startTime = 0;
+            boolean recording = false;
             while (true) {
                 byte[] data = new byte[16000];
                 int numBytesRead = line.read(data, 0, data.length);
