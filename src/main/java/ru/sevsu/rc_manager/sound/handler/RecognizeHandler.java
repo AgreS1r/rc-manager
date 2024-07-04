@@ -22,7 +22,7 @@ public class RecognizeHandler implements Handler {
 
     @PostConstruct
     private void init() throws IOException {
-        String modelPath = "C:\\Users\\user\\Downloads\\vosk-model-small-ru-0.22";
+        String modelPath = "/home/user2/Documents/vosk-model-small-ru-0.22";//ссылка выносится в конфиг
         Model model = new Model(modelPath);
         recognizer = new Recognizer(model, 16000);
     }
