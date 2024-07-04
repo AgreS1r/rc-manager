@@ -44,11 +44,11 @@ public class SoundReceiver {
                 line.read(data, 0, data.length);
                 sum = sum + soundProcessor.calibrate(data);
                 count++;
-                System.out.println(sum + " " + count);
                 calibrateDuration = System.currentTimeMillis() - startTime;
             }
             soundProcessor.setAvgNoiseAmplitude(sum/count);
-            System.out.println(sum/count);
+            log.info("Калибровка закончена");
+
 
             startTime = 0;
             boolean recording = false;
