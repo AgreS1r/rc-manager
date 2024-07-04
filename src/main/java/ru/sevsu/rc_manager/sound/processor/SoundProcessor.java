@@ -12,7 +12,7 @@ public class SoundProcessor {
 
     private int avgNoiseAmplitude;
 
-    public int calibrate(byte[] buffer) {
+    public int calculateAvgSoundAmplitude(byte[] buffer) {
         int sum = 0;
         for (byte b : buffer) {
             sum += abs(b);

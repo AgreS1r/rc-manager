@@ -20,8 +20,8 @@ public class SoundReceiver {
 
     @Value("${sound.min-duration}")
     private int minDuration;
-    @Value("${sound.calibration-time}")
-    private int calibrationTime;
+    @Value("${sound.calibration-time-ms}")
+    private int calibrationTimeMs;
 
     @PostConstruct
     public void receiveSound() {
@@ -39,10 +39,10 @@ public class SoundReceiver {
             int sum = 0;
             int count = 0;
             startTime = System.currentTimeMillis();
-            while (calibrateDuration < calibrationTime) {
+            while (calibrateDuration < calibrationTimeMs) {
                 byte[] data = new byte[16000];
                 line.read(data, 0, data.length);
-                sum = sum + soundProcessor.calibrate(data);
+                sum = sum + soundProcessor.calculateAvgSoundAmplitude(data);
                 count++;
                 calibrateDuration = System.currentTimeMillis() - startTime;
             }

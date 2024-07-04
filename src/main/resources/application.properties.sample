@@ -7,4 +7,4 @@ sound.channels = 1
 sound.signed = true
 sound.big-endian = false
 # Time of calibration
-sound.calibration-time = 20000
+sound.calibration-time-ms = 20000
