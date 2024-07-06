@@ -48,7 +48,7 @@ public class RepeaterHandler implements Handler {
         AudioInputStream repeatedAudioInputStream = new AudioInputStream(bais, audioFormat, soundBytes.length / audioFormat.getFrameSize());
     }
 
-    private byte[] generateBeepBytes(AudioFormat audioFormat) {
+    public byte[] generateBeepBytes(AudioFormat audioFormat) {
         // Генерируем писк на полсекунды
         int beepDuration = 500; // 500 ms
         int beepFrequency = 1000; // 1000 Hz
