@@ -1,10 +1,12 @@
 package ru.sevsu.rc_manager.sound.processor;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFormat;
 
+@Getter
 @Component
 public class SoundFormat {
     private final AudioFormat audioFormat;
@@ -19,7 +21,4 @@ public class SoundFormat {
     }
 
 
-    public AudioFormat getAudioFormat() {
-        return audioFormat;
-    }
 }

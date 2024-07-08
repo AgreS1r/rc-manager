@@ -17,7 +17,7 @@ import org.vosk.Model;
 import org.vosk.Recognizer;
 import ru.sevsu.rc_manager.sound.processor.SoundConverter;
 
-
+// Handler transcripts sound to text, if it possible
 @Component
 @Slf4j
 @RequiredArgsConstructor

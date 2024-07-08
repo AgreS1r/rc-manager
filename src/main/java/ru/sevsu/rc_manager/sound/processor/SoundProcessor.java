@@ -1,29 +1,35 @@
 package ru.sevsu.rc_manager.sound.processor;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
+
+import static java.lang.Math.abs;
 
 
 @Component
+@Setter
 public class SoundProcessor {
-    @Value("${sound.amplitude-threshold}")
-    private double amplitudeThreshold;
-    @Value("${sound.sample-size}")
-    private int sampleSize;
 
+    private int avgNoiseAmplitude;
 
-    public boolean isSound(byte[] buffer) {
-
-        for (int i = 0; i < buffer.length; i += sampleSize) {
-
-            short sample = (short) ((buffer[i + 1] << 8) | (buffer[i] & 0xFF));
-
-            if (Math.abs(sample) > amplitudeThreshold) {
-                return true;
-            }
+    public int calculateAvgSoundAmplitude(byte[] buffer) {
+        int sum = 0;
+        for (byte b : buffer) {
+            sum += abs(b);
         }
 
-        return false;
+        return sum / buffer.length;
+
+    }
+
+    public boolean isSound(byte[] buffer) {
+        int sum = 0;
+        for (byte b : buffer) {
+            sum += abs(b);
+        }
+        // if avg amplitude more than 1.5 * avg noise amplitude(calculated on calibration)
+        // we can think that it is some command
+        return sum / buffer.length >= avgNoiseAmplitude * 1.5;
     }
 
 
