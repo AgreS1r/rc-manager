@@ -31,7 +31,7 @@ public class TelegramSendHandler implements Handler {
         }
     }
     @Override
-    public void handle(AudioInputStream audioInputStream) {
+    public void handle(byte[] sound) {
 
         File dir = new File(savePath);
         LinkedList<File> files = new LinkedList<>(Arrays.asList(dir.listFiles()));
