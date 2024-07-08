@@ -18,9 +18,8 @@ public class SoundHandler {
 
     public void handle(byte[] sound) {
         log.info("Audio handled");
-        AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
-        saveHandler.handle(audioInputStream);
-        recognizeHandler.handle(audioInputStream);
+        saveHandler.handle(sound);
+        recognizeHandler.handle(sound);
 
     }
 }

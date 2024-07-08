@@ -4,7 +4,7 @@ import javax.sound.sampled.AudioInputStream;
 
 public class TelegramSendHandler implements Handler {
     @Override
-    public void handle(AudioInputStream audioInputStream) {
+    public void handle(byte[] sound) {
 
     }
 }
