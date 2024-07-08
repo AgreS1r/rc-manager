@@ -26,7 +26,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         String text = update.getMessage().getText();
         String ChatId = update.getMessage().getChatId().toString();
-        System.out.println(ChatId);
         if (text.equals("/sendfile")) {
 
             File file = new File("C:\\Users\\user\\Desktop\\1.mp3");
