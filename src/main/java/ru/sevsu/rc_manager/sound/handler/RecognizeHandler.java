@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.vosk.LibVosk;
 import org.vosk.LogLevel;
@@ -25,10 +26,11 @@ public class RecognizeHandler implements Handler {
     private Recognizer recognizer;
     private ObjectMapper objectMapper;
     private final SoundConverter soundConverter;
+    @Value("${sound.recognize.model-path}")
+    private String modelPath;
 
     @PostConstruct
     private void init() throws IOException {
-        String modelPath = "/home/user2/Documents/vosk-model-small-ru-0.22";//ссылка выносится в конфиг
         Model model = new Model(modelPath);
         recognizer = new Recognizer(model, 16000);
         objectMapper = new ObjectMapper();
@@ -39,7 +41,6 @@ public class RecognizeHandler implements Handler {
     public void handle(byte[] sound) {
         try {
             LibVosk.setLogLevel(LogLevel.WARNINGS);
-            String audioFilePath = "temp.wav";
 
             AudioInputStream ais = soundConverter.byteToStream(sound);
                 int nbytes;
