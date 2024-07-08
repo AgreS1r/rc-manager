@@ -1,10 +1,13 @@
-# Minimum duration of received sound
+spring.application.name=rc-manager
+logging.level.org.springframework=INFO
+sound.save-path = C:\\Users\\user\\Desktop\\New
 sound.min-duration = 1000
-# Config for Java AudioFormat from javax.sound
-sound.sample-size-in-bits = 16
 sound.sample-rate = 16000
+sound.sample-size-in-bits = 16
 sound.channels = 1
 sound.signed = true
 sound.big-endian = false
+telegram.chat-id = -4251965745
+telegram.bot-token = 7457093088:AAGqBgHagG0zO6En7YQj98ywJj5n_tN7g9c
 # Time of calibration
 sound.calibration-time-ms = 20000
