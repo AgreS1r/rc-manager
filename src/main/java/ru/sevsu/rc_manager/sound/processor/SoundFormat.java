@@ -16,8 +16,8 @@ public class SoundFormat {
                        @Value("${sound.channels}") int channels,
                        @Value("${sound.signed}") boolean signed,
                        @Value("${sound.big-endian}") boolean bigEndian) {
-        audioFormat = new
-                AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
+        audioFormat =
+                new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
     }
 
 

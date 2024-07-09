@@ -46,7 +46,7 @@ public class SoundReceiver {
                 count++;
                 calibrateDuration = System.currentTimeMillis() - startTime;
             }
-            soundProcessor.setAvgNoiseAmplitude(sum/count);
+            soundProcessor.setAvgNoiseAmplitude(sum / count);
             log.info("Калибровка закончена");
 
 
@@ -68,6 +68,8 @@ public class SoundReceiver {
                         long duration = endTime - startTime;
                         if (duration > minDuration) {
                             soundHandler.handle(buffer.toByteArray());
+                        } else {
+                            log.debug("Duration less than min");
                         }
 
                         buffer.reset();

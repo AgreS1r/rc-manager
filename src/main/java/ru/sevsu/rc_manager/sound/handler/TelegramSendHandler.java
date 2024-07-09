@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.sevsu.rc_manager.sound.handler.bot.TelegramBot;
-import javax.sound.sampled.AudioInputStream;
+
 import java.io.File;
 import java.util.*;
 
@@ -21,15 +21,19 @@ public class TelegramSendHandler implements Handler {
     @Value("${sound.save-path}")
     private String savePath;
     private final TelegramBot bot;
+
     @PostConstruct
     private void init() {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(bot);
-        } catch (TelegramApiException e){
+        } catch (TelegramApiException e) {
             log.error("Error creating bot telegrams in TelegramSendHandler");
         }
+        log.info("TelegramSendHandler init!");
+
     }
+
     @Override
     public void handle(byte[] sound) {
 

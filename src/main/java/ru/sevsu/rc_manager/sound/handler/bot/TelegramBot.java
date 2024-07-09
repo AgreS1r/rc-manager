@@ -10,42 +10,29 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 
 @Component
 @Slf4j
-
 public class TelegramBot extends TelegramLongPollingBot {
     @Value("${telegram.chat-id}")
-    private String idPath;
+    private String chatId;
     @Value("${telegram.bot-token}")
     private String botToken;
+    private static final String INFO_TEXT = "Бот для отправки принятых аудиозаписей";
+
     @Override
     public void onUpdateReceived(Update update) {
         String text = update.getMessage().getText();
         String ChatId = update.getMessage().getChatId().toString();
-        if (text.equals("/sendfile")) {
-
-            File file = new File("C:\\Users\\user\\Desktop\\1.mp3");
-            InputFile inputFile = new InputFile(file);
-            SendDocument sendDocumentRequest = new SendDocument();
-            sendDocumentRequest.setChatId(ChatId);
-            sendDocumentRequest.setDocument(inputFile);
-            try {
-                execute(sendDocumentRequest); // Отправляем файл
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        } else {
+        if (text.equals("/info")) {
             SendMessage message = new SendMessage();
             message.setChatId(ChatId);
-            message.setText(text);
+            message.setText(INFO_TEXT);
             try {
-                this.execute(message);
+                execute(message);
             } catch (TelegramApiException e) {
-                log.error("При ответе возникла ошибка");
+                log.warn(e.getMessage());
             }
         }
     }
@@ -53,19 +40,21 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void sendSound(File soundFile) {
         InputFile inputFile = new InputFile(soundFile);
         SendDocument sendDocumentRequest = new SendDocument();
-        sendDocumentRequest.setChatId(idPath);
+        sendDocumentRequest.setChatId(chatId);
         sendDocumentRequest.setDocument(inputFile);
         try {
             execute(sendDocumentRequest); // Отправляем файл
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage());
         }
+        log.debug("Отправлен файл " + soundFile.getName() + " в чат " + chatId);
     }
 
     @Override
     public String getBotToken() {
         return botToken;
     }
+
     @Override
     public String getBotUsername() {
         return "Manager_rc_Bot";

@@ -1,8 +1,6 @@
 package ru.sevsu.rc_manager.sound.handler;
 
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -34,6 +32,7 @@ public class RecognizeHandler implements Handler {
         Model model = new Model(modelPath);
         recognizer = new Recognizer(model, 16000);
         objectMapper = new ObjectMapper();
+        log.info("RecognizeHandler init!");
     }
 
 
@@ -43,17 +42,19 @@ public class RecognizeHandler implements Handler {
             LibVosk.setLogLevel(LogLevel.WARNINGS);
 
             AudioInputStream ais = soundConverter.byteToStream(sound);
-                int nbytes;
-                byte[] b = new byte[4096];
-                while ((nbytes = ais.read(b)) >= 0){
-                    if (recognizer.acceptWaveForm(b, nbytes)) {
-                        JsonNode jsonNode = objectMapper.readTree(recognizer.getResult());
-                        String text = jsonNode.get("text").asText();
-                        log.info(text);
-                    }
+            int nbytes;
+            byte[] b = new byte[4096];
+            while ((nbytes = ais.read(b)) >= 0) {
+                if (recognizer.acceptWaveForm(b, nbytes)) {
+                    JsonNode jsonNode = objectMapper.readTree(recognizer.getResult());
+                    String text = jsonNode.get("text").asText();
+                    log.info(text);
+                } else {
+                    log.warn("Failed to recognize speech");
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}

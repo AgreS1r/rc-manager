@@ -10,10 +10,6 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,15 +25,13 @@ public class SaveSoundHandler implements Handler {
 
     @Value("${sound.save-path}")
     private String savePath;
+
     @Override
     public void handle(byte[] sound) {
-        // Original path with "temp.wav"
 
-        // New path with date and time appended
         String dateTimePath = LocalDateTime.now().format(formatter) + "_signal.wav";
 
         try {
-            // Save the audio file with the original path
             AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE,
                     new File(savePath + "/" + LocalDateTime.now().format(formatter) + "_signal.wav"));

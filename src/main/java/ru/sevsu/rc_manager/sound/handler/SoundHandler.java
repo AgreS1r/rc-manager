@@ -3,9 +3,8 @@ package ru.sevsu.rc_manager.sound.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sevsu.rc_manager.sound.processor.SoundConverter;
 
-import javax.sound.sampled.AudioInputStream;
+import java.time.Instant;
 
 @Component
 @RequiredArgsConstructor
@@ -17,10 +16,11 @@ public class SoundHandler {
 
 
     public void handle(byte[] sound) {
-        log.info("Audio handled");
+        Instant time = Instant.now();
+        log.debug("Audio start handle in " + time);
         saveSoundHandler.handle(sound);
         telegramSendHandler.handle(sound);
         recognizeHandler.handle(sound);
-
+        log.debug("Audio started handle it " + time + " ended in " + Instant.now());
     }
 }
