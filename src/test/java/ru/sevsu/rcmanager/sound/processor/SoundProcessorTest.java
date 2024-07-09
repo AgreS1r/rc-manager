@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.processor;
+package ru.sevsu.rcmanager.sound.processor;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,7 @@ class SoundProcessorTest {
     @BeforeEach
     void setUp() {
         soundProcessor = new SoundProcessor();
-        soundProcessor.setAmplitudeThreshold(1000);
-        soundProcessor.setSampleSize(2);
+        soundProcessor.setAvgNoiseAmplitude(1);
     }
 
     @Test
@@ -24,19 +23,19 @@ class SoundProcessorTest {
 
     @Test
     void testIsSoundWithSound() {
-        byte[] buffer = new byte[]{0, 0, 0, 0, (byte)0xF8, 0x03, (byte)0xF8, 0};
+        byte[] buffer = new byte[]{5, -5, 10, 12, 3, 8, 5, 3};
         assertTrue(soundProcessor.isSound(buffer));
     }
 
     @Test
-    void testIsSoundWithThresholdEdge() {
-        byte[] buffer = new byte[]{(byte)0xE8, 0x03, 0, 0};
+    void testIsSoundWithAvgNoiseAmplitude() {
+        byte[] buffer = new byte[]{2, 1, 2, 1};
         assertTrue(soundProcessor.isSound(buffer));
     }
 
     @Test
-    void testIsSoundBellowThresholdEdge() {
-        byte[] buffer = new byte[]{(byte)0xE7, 0x03, 0, 0};
+    void testIsSoundBellowAvgNoiseAmplitude() {
+        byte[] buffer = new byte[]{1, 1, 1, 1};
         assertFalse(soundProcessor.isSound(buffer));
     }
 }

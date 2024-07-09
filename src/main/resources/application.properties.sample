@@ -1,11 +1,14 @@
 # Minimum duration of received sound
 sound.min-duration = 1000
-# Amplitude for check sound or not
-sound.amplitude-threshold = 1000
 # Config for Java AudioFormat from javax.sound
-sound.sample-size-bytes = 2
 sound.sample-size-in-bits = 16
 sound.sample-rate = 16000
 sound.channels = 1
 sound.signed = true
 sound.big-endian = false
+# Time of calibration
+sound.calibration-time-ms = 20000
+telegram.chat-id =
+telegram.bot-token =
+sound.recognize.model-path = D:\\vosk-model-small-ru-0.22
+sound.save-path = D:\\testproj

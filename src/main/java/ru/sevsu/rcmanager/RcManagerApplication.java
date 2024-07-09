@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager;
+package ru.sevsu.rcmanager;
 
 
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.processor;
+package ru.sevsu.rcmanager.sound.processor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
