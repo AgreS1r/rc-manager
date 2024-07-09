@@ -1,10 +1,10 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.sevsu.rc_manager.sound.processor.SoundConverter;
+import ru.sevsu.rcmanager.sound.processor.SoundConverter;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;

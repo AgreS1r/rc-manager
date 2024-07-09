@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.processor;
+package ru.sevsu.rcmanager.sound.processor;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

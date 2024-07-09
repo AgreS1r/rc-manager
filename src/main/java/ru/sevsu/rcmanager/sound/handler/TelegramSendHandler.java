@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import ru.sevsu.rc_manager.sound.handler.bot.TelegramBot;
+import ru.sevsu.rcmanager.sound.handler.bot.TelegramBot;
 
 import java.io.File;
 import java.util.*;

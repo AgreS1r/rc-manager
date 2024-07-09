@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
 import javax.sound.sampled.AudioInputStream;
 import java.io.*;
@@ -14,7 +14,7 @@ import org.vosk.LibVosk;
 import org.vosk.LogLevel;
 import org.vosk.Model;
 import org.vosk.Recognizer;
-import ru.sevsu.rc_manager.sound.processor.SoundConverter;
+import ru.sevsu.rcmanager.sound.processor.SoundConverter;
 
 // Handler transcripts sound to text, if it possible
 @Component
@@ -26,11 +26,13 @@ public class RecognizeHandler implements Handler {
     private final SoundConverter soundConverter;
     @Value("${sound.recognize.model-path}")
     private String modelPath;
+    @Value("${sound.sample-rate}")
+    private int simpleRate;
 
     @PostConstruct
     private void init() throws IOException {
         Model model = new Model(modelPath);
-        recognizer = new Recognizer(model, 16000);
+        recognizer = new Recognizer(model, simpleRate);
         objectMapper = new ObjectMapper();
         log.info("RecognizeHandler init!");
     }
@@ -54,7 +56,7 @@ public class RecognizeHandler implements Handler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage());
         }
     }
 }

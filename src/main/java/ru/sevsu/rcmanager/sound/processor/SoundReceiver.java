@@ -1,11 +1,11 @@
-package ru.sevsu.rc_manager.sound.processor;
+package ru.sevsu.rcmanager.sound.processor;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.sevsu.rc_manager.sound.handler.SoundHandler;
+import ru.sevsu.rcmanager.sound.handler.SoundHandler;
 
 import javax.sound.sampled.*;
 import java.io.ByteArrayOutputStream;
@@ -47,7 +47,7 @@ public class SoundReceiver {
                 calibrateDuration = System.currentTimeMillis() - startTime;
             }
             soundProcessor.setAvgNoiseAmplitude(sum / count);
-            log.info("Калибровка закончена");
+            log.info("Calibration completed");
 
 
             startTime = 0;
@@ -69,7 +69,8 @@ public class SoundReceiver {
                         if (duration > minDuration) {
                             soundHandler.handle(buffer.toByteArray());
                         } else {
-                            log.debug("Duration less than min");
+                            log.debug("Current duration is " + duration
+                                    +  " which is less than minimum " + minDuration);
                         }
 
                         buffer.reset();

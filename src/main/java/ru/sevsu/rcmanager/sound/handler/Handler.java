@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
 public interface Handler {
     void handle(byte[] sound);

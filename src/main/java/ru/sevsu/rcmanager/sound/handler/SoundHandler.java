@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

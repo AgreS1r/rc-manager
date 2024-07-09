@@ -1,4 +1,4 @@
-package ru.sevsu.rc_manager.sound.processor;
+package ru.sevsu.rcmanager.sound.processor;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
