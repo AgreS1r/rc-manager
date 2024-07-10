@@ -28,13 +28,16 @@ public class SaveSoundHandler implements Handler {
 
     @Override
     public void handle(byte[] sound) {
-
+        log.debug("Handling sound byte array...");
         String dateTimePath = LocalDateTime.now().format(formatter) + "_signal.wav";
-
+        log.debug("Generated file name: {}", dateTimePath);
         try {
+            log.debug("Converting sound to AudioInputStream...");
             AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
+            log.debug("Writing audio to file...");
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE,
                     new File(savePath + "/" + LocalDateTime.now().format(formatter) + "_signal.wav"));
+            log.info("Audio file saved successfully");
         } catch (IOException e) {
             log.warn("Error saving audio file: {}", e.getMessage());
         }

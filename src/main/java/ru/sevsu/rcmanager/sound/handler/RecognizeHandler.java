@@ -31,6 +31,7 @@ public class RecognizeHandler implements Handler {
 
     @PostConstruct
     private void init() throws IOException {
+        log.debug("Initializing RecognizeHandler...");
         Model model = new Model(modelPath);
         recognizer = new Recognizer(model, simpleRate);
         objectMapper = new ObjectMapper();
@@ -41,13 +42,17 @@ public class RecognizeHandler implements Handler {
     @Override
     public void handle(byte[] sound) {
         try {
+            log.debug("Handling sound byte array...");
             LibVosk.setLogLevel(LogLevel.WARNINGS);
 
             AudioInputStream ais = soundConverter.byteToStream(sound);
+            log.debug("Converted sound to AudioInputStream...");
             int nbytes;
             byte[] b = new byte[4096];
             while ((nbytes = ais.read(b)) >= 0) {
+                log.debug("Reading audio data...");
                 if (recognizer.acceptWaveForm(b, nbytes)) {
+                    log.debug("Recognized speech, processing result...");
                     JsonNode jsonNode = objectMapper.readTree(recognizer.getResult());
                     String text = jsonNode.get("text").asText();
                     log.info(text);

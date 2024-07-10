@@ -24,6 +24,7 @@ public class TelegramSendHandler implements Handler {
 
     @PostConstruct
     private void init() {
+        log.debug("Initializing TelegramSendHandler...");
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(bot);
@@ -37,9 +38,13 @@ public class TelegramSendHandler implements Handler {
     @Override
     public void handle(byte[] sound) {
 
+        log.debug("Handling sound byte array...");
         File dir = new File(savePath);
+        log.debug("Getting list of files in directory...");
         LinkedList<File> files = new LinkedList<>(Arrays.asList(dir.listFiles()));
+        log.debug("Sorting files by last modified date...");
         files.sort(Comparator.comparingLong(File::lastModified));
+        log.debug("Sending last modified file to Telegram...");
         bot.sendSound(files.getLast());
     }
 }

@@ -16,6 +16,12 @@ public class SoundFormat {
                        @Value("${sound.channels}") int channels,
                        @Value("${sound.signed}") boolean signed,
                        @Value("${sound.big-endian}") boolean bigEndian) {
+        log.debug("Creating SoundFormat object...");
+        log.debug("Sample rate: {}", sampleRate);
+        log.debug("Sample size in bits: {}", sampleSizeInBits);
+        log.debug("Channels: {}", channels);
+        log.debug("Signed: {}", signed);
+        log.debug("Big-endian: {}", bigEndian);
         audioFormat =
                 new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
     }
