@@ -10,5 +10,11 @@ sound.big-endian = false
 sound.calibration-time-ms = 20000
 telegram.chat-id =
 telegram.bot-token =
+# Path to Vosk model
 sound.recognize.model-path = D:\\vosk-model-small-ru-0.22
+# Save path to SaveHandler
 sound.save-path = D:\\testproj
+# Option to create handler
+handler.save = true
+handler.telegram = true
+handler.recognize = true
