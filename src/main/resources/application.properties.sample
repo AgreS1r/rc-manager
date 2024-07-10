@@ -8,3 +8,7 @@ sound.signed = true
 sound.big-endian = false
 # Time of calibration
 sound.calibration-time-ms = 20000
+telegram.chat-id =
+telegram.bot-token =
+sound.recognize.model-path = D:\\vosk-model-small-ru-0.22
+sound.save-path = D:\\testproj
