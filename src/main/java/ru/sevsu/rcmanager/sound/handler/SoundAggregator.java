@@ -15,14 +15,18 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SoundAggregator {
 
-    @Autowired
+    @Autowired(required = false)
     private List<Handler> handlers;
 
     public void handleSound(byte[] sound) {
+        if (handlers == null) {
+            log.warn("No handlers to handle sound");
+            return;
+        }
         Instant time = Instant.now();
         log.debug("Audio start handle in " + time);
         List<CompletableFuture<Void>> handlerFutures = handlers.stream()
-                        .map(h -> CompletableFuture.runAsync(() -> h.handle(sound)))
+                .map(h -> CompletableFuture.runAsync(() -> h.handle(sound)))
                 .collect(Collectors.toList());
 
         CompletableFuture<Void> allOf = CompletableFuture.allOf(handlerFutures.toArray(new CompletableFuture[0]));

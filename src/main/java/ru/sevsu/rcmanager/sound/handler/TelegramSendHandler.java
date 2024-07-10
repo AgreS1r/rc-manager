@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(value = "handler.telegram", havingValue = "true")
 // Handler sends sound in telegram chat
 public class TelegramSendHandler implements Handler {
     @Value("${sound.save-path}")

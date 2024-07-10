@@ -13,6 +13,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.vosk.Model;
 import org.vosk.Recognizer;
@@ -22,6 +23,7 @@ import ru.sevsu.rcmanager.sound.processor.SoundConverter;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@ConditionalOnProperty(value = "handler.recognize", havingValue = "true")
 public class RecognizeHandler implements Handler {
     private Recognizer recognizer;
     private ObjectMapper objectMapper;
