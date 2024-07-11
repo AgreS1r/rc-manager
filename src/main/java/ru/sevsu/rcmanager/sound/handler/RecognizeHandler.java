@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.vosk.Model;
 import org.vosk.Recognizer;
+import ru.sevsu.rcmanager.sound.controller.TaskController;
 import ru.sevsu.rcmanager.sound.processor.SoundConverter;
 
 // Handler transcripts sound to text, if it possible
@@ -28,6 +29,7 @@ public class RecognizeHandler implements Handler {
     private Recognizer recognizer;
     private ObjectMapper objectMapper;
     private final SoundConverter soundConverter;
+    private final TaskController taskController;
     @Value("${sound.recognize.model-path}")
     private String modelPath;
     @Value("${sound.sample-rate}")
@@ -63,14 +65,17 @@ public class RecognizeHandler implements Handler {
                     new BufferedInputStream(new FileInputStream(TEMP_FILE_NAME)));
             int nbytes;
             byte[] b = new byte[1024];
+            String textRecognize = null;
             while ((nbytes = ais.read(b)) >= 0) {
                 if (recognizer.acceptWaveForm(b, nbytes)) {
                     JsonNode jsonNode = objectMapper.readTree(recognizer.getResult());
-                    String text = jsonNode.get("text").asText();
-                    writer.append(text);
-                    log.info(text);
+                    textRecognize = jsonNode.get("text").asText();
+                    writer.append(textRecognize);
+                    log.info(textRecognize);
+                    taskController.searchCommand(textRecognize);
                 }
             }
+
             file.delete();
             writer.close();
         } catch (IOException | UnsupportedAudioFileException e) {
