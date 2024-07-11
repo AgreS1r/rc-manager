@@ -3,6 +3,7 @@ package ru.sevsu.rcmanager.sound.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class TaskController {
-    @Value("${sound.levenshtein-distance}")
     private int levenshteinDistance;
     private Map<String, Command> commandsMap = new HashMap<>();
     private final String[] commands = {"открой ворота","дуров верни стену", "большой брат следит за тобой"};
+
     public boolean findString(String[] strings, String desired) {
         for (String str : strings) {
             if (desired.contains(str)) {
@@ -29,7 +30,8 @@ public class TaskController {
         void execute();
     }
 
-    public TaskController() {
+    public TaskController(@Value("${sound.levenshtein-distance}") int levenshteinDistance) {
+        this.levenshteinDistance = levenshteinDistance;
         // Инициализация команд
         commandsMap.put("открой ворота", new OpenDoorsCommand());
         commandsMap.put("большой брат следит за тобой", new EightCommand());
