@@ -18,3 +18,4 @@ sound.save-path = D:\\testproj
 handler.save = true
 handler.telegram = true
 handler.recognize = true
+handler.repeater = true

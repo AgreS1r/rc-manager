@@ -1,21 +1,33 @@
-package ru.sevsu.rc_manager.sound.handler;
+package ru.sevsu.rcmanager.sound.handler;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
+import ru.sevsu.rcmanager.sound.processor.SoundConverter;
+import ru.sevsu.rcmanager.sound.processor.SoundFormat;
+
+import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+@Component
+@ConditionalOnProperty(value = "handler.repeater", havingValue = "true")
+@Slf4j
+@RequiredArgsConstructor
+
 public class RepeaterHandler implements Handler {
-    private static final Logger LOGGER = Logger.getLogger(RepeaterHandler.class.getName());
+
+    private final SoundConverter soundConverter;
 
     @Override
-    public void handle(AudioInputStream audioInputStream) {
+    public void handle(byte[] sound) {
         // Получаем метаданные из AudioInputStream
+        AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
         AudioFormat audioFormat = audioInputStream.getFormat();
         int frameSize = audioFormat.getFrameSize();
-        int frameRate = (int) audioFormat.getFrameRate();
 
         // Читаем аудиоданные из AudioInputStream
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -26,7 +38,7 @@ public class RepeaterHandler implements Handler {
                 bos.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            LOGGER.severe("Error reading audio input stream: " + e.getMessage());
+            log.warn("Error reading audio input stream: " + e.getMessage());
         }
 
         // Получаем массив байтов из ByteArrayOutputStream
@@ -43,9 +55,18 @@ public class RepeaterHandler implements Handler {
     }
 
     private void repeatSound(byte[] soundBytes, AudioFormat audioFormat) {
-        // Создаем новый AudioInputStream из массива байтов
-        ByteArrayInputStream bais = new ByteArrayInputStream(soundBytes);
-        AudioInputStream repeatedAudioInputStream = new AudioInputStream(bais, audioFormat, soundBytes.length / audioFormat.getFrameSize());
+        try {
+            AudioInputStream repeatedAudioInputStream = soundConverter.byteToStream(soundBytes);
+            Clip clip = AudioSystem.getClip();
+            clip.open(repeatedAudioInputStream);
+            clip.setFramePosition(0);
+            clip.start();
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+            clip.stop();
+            clip.close(); //
+        } catch (IOException | LineUnavailableException | InterruptedException e) {
+            log.warn(e.getMessage());
+        }
     }
 
     public byte[] generateBeepBytes(AudioFormat audioFormat) {
