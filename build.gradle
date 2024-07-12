@@ -27,6 +27,7 @@ dependencies {
 	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.14.0'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.1'
 	implementation 'org.telegram:telegrambots:6.8.0'
+	implementation group: 'org.apache.commons', name: 'commons-text', version: '1.12.0'
 }
 
 tasks.named('test') {
