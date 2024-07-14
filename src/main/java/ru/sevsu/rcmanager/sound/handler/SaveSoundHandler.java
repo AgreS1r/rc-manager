@@ -3,6 +3,7 @@ package ru.sevsu.rcmanager.sound.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import ru.sevsu.rcmanager.sound.processor.SoundConverter;
 
@@ -18,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-
+@ConditionalOnProperty(value = "handler.save", havingValue = "true")
 public class SaveSoundHandler implements Handler {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH-mm-ss");
     private final SoundConverter soundConverter;
@@ -34,7 +35,7 @@ public class SaveSoundHandler implements Handler {
         try {
             AudioInputStream audioInputStream = soundConverter.byteToStream(sound);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE,
-                    new File(savePath + "/" + LocalDateTime.now().format(formatter) + "_signal.wav"));
+                    new File(savePath + "/" + dateTimePath));
         } catch (IOException e) {
             log.warn("Error saving audio file: {}", e.getMessage());
         }
